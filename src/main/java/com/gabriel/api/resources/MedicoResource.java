@@ -2,6 +2,7 @@ package com.gabriel.api.resources;
 
 import com.gabriel.api.medico.*;
 import com.gabriel.api.services.MedicoSevice;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/medicos")
+@SecurityRequirement(name = "bearer-key")
 public class MedicoResource {
 
     @Autowired
@@ -27,7 +29,7 @@ public class MedicoResource {
         return ResponseEntity.ok().body(medicoService.findById(id));
     }
     @GetMapping
-    public ResponseEntity<Page<DadosListagemMedico>> findAll(@PageableDefault(size=10, page=0, sort={"nome"}) Pageable pageable) {
+    public ResponseEntity<Page<DadosListagemMedico>> findAll(@PageableDefault(size=10, page=0, sort={"id"}) Pageable pageable) {
         return ResponseEntity.ok().body(medicoService.findAll(pageable));
     }
     @PostMapping("/cadastrar")
